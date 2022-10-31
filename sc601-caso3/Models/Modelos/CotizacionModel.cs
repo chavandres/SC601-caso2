@@ -7,5 +7,6 @@ namespace sc601_caso3.Models.Modelos
 {
     public class CotizacionModel
     {
+
     }
 }
