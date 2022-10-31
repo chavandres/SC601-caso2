@@ -8,7 +8,7 @@ namespace sc601_caso3.Models.Objetos
 {
     public class CotizacionObj
     {
-        public int codigo { get; set; } //PK
+        public long codigo { get; set; } //PK
         [Required(ErrorMessage = "El campo matricula es requerido.")]
         public string matricula { get; set; } //FK
         [Required(ErrorMessage = "El campo porcentaje de descuento es requerido.")]
