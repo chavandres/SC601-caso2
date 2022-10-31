@@ -22,8 +22,13 @@ namespace sc601_caso3.Controllers
                 }
                 return BadRequest(msg);
             }
-
-            cotModel.CotizarVehiculo(cot);
+            try {
+                cotModel.CotizarVehiculo(cot);
+            }
+            catch (Exception) {
+                return InternalServerError();
+            }
+            
             if (cot.precioFinal == 0) {
                 return BadRequest("El vehículo es del año 2010 o antes y por ende no puede ser cotizado.");
             }
