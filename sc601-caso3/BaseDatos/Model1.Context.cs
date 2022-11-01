@@ -40,5 +40,28 @@ namespace sc601_caso3.BaseDatos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CotizacionVehiculo_Result>("CotizacionVehiculo", matriculaParameter, porcentajeParameter);
         }
+    
+        public virtual ObjectResult<ConsultaVehiculoPlaca_Result> ConsultaVehiculoPlaca(string placa)
+        {
+            var placaParameter = placa != null ?
+                new ObjectParameter("placa", placa) :
+                new ObjectParameter("placa", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ConsultaVehiculoPlaca_Result>("ConsultaVehiculoPlaca", placaParameter);
+        }
+    
+        public virtual ObjectResult<ListarVehiculos_Result> ListarVehiculos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ListarVehiculos_Result>("ListarVehiculos");
+        }
+    
+        public virtual int RegistroBitacora(Nullable<long> codigoCotizacion)
+        {
+            var codigoCotizacionParameter = codigoCotizacion.HasValue ?
+                new ObjectParameter("CodigoCotizacion", codigoCotizacion) :
+                new ObjectParameter("CodigoCotizacion", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistroBitacora", codigoCotizacionParameter);
+        }
     }
 }

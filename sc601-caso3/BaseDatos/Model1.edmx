@@ -5,9 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="PracticaLNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="ConsultaVehiculoPlaca" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="placa" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="CotizacionVehiculo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Matricula" Type="varchar" Mode="In" />
           <Parameter Name="Porcentaje" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ListarVehiculos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RegistroBitacora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoCotizacion" Type="bigint" Mode="In" />
         </Function>
         <EntityContainer Name="PracticaLNModelStoreContainer" />
       </Schema></edmx:StorageModels>
@@ -19,12 +26,29 @@
             <Parameter Name="Matricula" Mode="In" Type="String" />
             <Parameter Name="Porcentaje" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="ConsultaVehiculoPlaca" ReturnType="Collection(PracticaLNModel.ConsultaVehiculoPlaca_Result)">
+            <Parameter Name="placa" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListarVehiculos" ReturnType="Collection(PracticaLNModel.ListarVehiculos_Result)" />
+          <FunctionImport Name="RegistroBitacora">
+            <Parameter Name="CodigoCotizacion" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CotizacionVehiculo_Result">
           <Property Type="Int64" Name="Codigo" Nullable="false" />
           <Property Type="String" Name="Matricula" Nullable="false" MaxLength="6" />
           <Property Type="Int32" Name="Porcentaje" Nullable="false" />
           <Property Type="Decimal" Name="PrecioFinal" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="ConsultaVehiculoPlaca_Result">
+          <Property Type="String" Name="Matricula" Nullable="false" MaxLength="6" />
+          <Property Type="Decimal" Name="PrecioInicial" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Fabricacion" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ListarVehiculos_Result">
+          <Property Type="String" Name="Matricula" Nullable="false" MaxLength="6" />
+          <Property Type="Decimal" Name="PrecioInicial" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Fabricacion" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -42,6 +66,25 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ConsultaVehiculoPlaca" FunctionName="PracticaLNModel.Store.ConsultaVehiculoPlaca">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PracticaLNModel.ConsultaVehiculoPlaca_Result">
+                <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+                <ScalarProperty Name="PrecioInicial" ColumnName="PrecioInicial" />
+                <ScalarProperty Name="Fabricacion" ColumnName="Fabricacion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ListarVehiculos" FunctionName="PracticaLNModel.Store.ListarVehiculos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PracticaLNModel.ListarVehiculos_Result">
+                <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+                <ScalarProperty Name="PrecioInicial" ColumnName="PrecioInicial" />
+                <ScalarProperty Name="Fabricacion" ColumnName="Fabricacion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RegistroBitacora" FunctionName="PracticaLNModel.Store.RegistroBitacora" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
