@@ -32,7 +32,7 @@ namespace sc601_caso3.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/Vehiculos/VehiculoPlaca")]
         public IHttpActionResult ConsultarPlaca(string placa)
         {
@@ -53,8 +53,5 @@ namespace sc601_caso3.Controllers
             }
 
         }
-
-
-
     }
 }
